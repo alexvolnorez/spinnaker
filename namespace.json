@@ -1,0 +1,10 @@
+{
+  "apiVersion": "v1",
+  "kind": "ki",
+  "metadata": {
+    "name": "production",
+    "labels": {
+      "name": "production"
+    }
+  }
+}
