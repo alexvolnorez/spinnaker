@@ -1,0 +1,29 @@
+name: Service registry API
+on:
+  workflow_call:
+    inputs:
+      data:
+        description: 'Data to save'
+        required: false
+        type: string
+
+env:
+  VAULT_ADDR:            "https://vault.azure-omnicloud.com"
+
+jobs:
+  create-runner:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Show data from action
+        run: |
+          echo "Start of the string"
+          echo $data
+          echo "End of the data show VAULT_ADD"
+          echo $VAULT_ADDR
