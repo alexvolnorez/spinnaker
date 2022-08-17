@@ -9,6 +9,7 @@ on:
 
 env:
   VAULT_ADDR:            "https://vault.azure-omnicloud.com"
+  INPUT_DATA: ${{ github.event.inputs.data }}
 
 jobs:
   create-runner:
@@ -24,6 +25,6 @@ jobs:
       - name: Show data from action
         run: |
           echo "Start of the string"
-          echo $data
+          echo $INPUT_DATA
           echo "End of the data show VAULT_ADD"
           echo $VAULT_ADDR
