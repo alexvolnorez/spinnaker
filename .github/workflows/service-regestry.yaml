@@ -4,15 +4,21 @@ on:
     inputs:
       data:
         description: 'Data to save'
-        required: false
+        required: true
+        type: string
+      action-path:
+        description: 'Path to action in github'
+        required: true
         type: string
 
 env:
   VAULT_ADDR:            "https://vault.azure-omnicloud.com"
-  INPUT_DATA: ${{ github.event.inputs.data }}
+  ACTION_PATH:           ${{ github.event.inputs.action-path }}
+  DATA_FROM_INPUT:       ${{ github.event.inputs.data }}
+  PATH_TO_MONGO_SECRET:  "infrastructure/data/aws/mongo/mongo-primary"
 
 jobs:
-  create-runner:
+  write-to-mongo-regestry:
     runs-on: ubuntu-latest
 
     defaults:
@@ -20,11 +26,15 @@ jobs:
         shell: bash
 
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: Show data from action
+      #- uses: actions/checkout@v3
+
+      # Decode input data
+      - name: Decode input data
         run: |
-          echo "Start of the string"
-          echo $INPUT_DATA
-          echo "End of the data show VAULT_ADD"
-          echo $VAULT_ADDR
+          echo "DATA_TO_SAVE='$(echo "$DATA_FROM_INPUT" | base64 -d)'" >> $GITHUB_ENV
+          echo "PATH_TO_SAVE='$(echo "$ACTION_PATH" | base64 -d)'" >> $GITHUB_ENV
+
+      - name: Store service data in mongo registry
+        run: |
+          echo $PATH_TO_SAVE
+          echo $DATA_TO_SAVE
