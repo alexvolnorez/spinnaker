@@ -31,10 +31,13 @@ jobs:
       # Decode input data
       - name: Decode input data
         run: |
-          echo "DATA_TO_SAVE='$(echo "$DATA_FROM_INPUT" | base64 -d)'" >> $GITHUB_ENV
-          echo "PATH_TO_SAVE='$(echo "$ACTION_PATH" | base64 -d)'" >> $GITHUB_ENV
+          echo "DATA_FROM_INPUT"
+          echo "ACTION_PATH"
+          echo "DATA_TO_SAVE=$(echo $DATA_FROM_INPUT | base64 -d)" >> $GITHUB_ENV
+          echo "PATH_TO_SAVE=$(echo $ACTION_PATH | base64 -d)" >> $GITHUB_ENV
 
       - name: Store service data in mongo registry
         run: |
+          env
           echo $PATH_TO_SAVE
           echo $DATA_TO_SAVE
