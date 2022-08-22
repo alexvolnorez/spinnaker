@@ -13,8 +13,8 @@ on:
 
 env:
   VAULT_ADDR:            "https://vault.azure-omnicloud.com"
-  ACTION_PATH:           ${{ github.event.inputs.action-path }}
-  DATA_FROM_INPUT:       ${{ github.event.inputs.data }}
+  ACTION_PATH:           ${{ inputs.action-path }}
+  DATA_FROM_INPUT:       ${{ inputs.data }}
   PATH_TO_MONGO_SECRET:  "infrastructure/data/aws/mongo/mongo-primary"
 
 jobs:
@@ -31,8 +31,8 @@ jobs:
       # Decode input data
       - name: Decode input data
         run: |
-          echo "DATA_FROM_INPUT"
-          echo "ACTION_PATH"
+          echo "$DATA_FROM_INPUT"
+          echo "$ACTION_PATH"
           echo "DATA_TO_SAVE=$(echo $DATA_FROM_INPUT | base64 -d)" >> $GITHUB_ENV
           echo "PATH_TO_SAVE=$(echo $ACTION_PATH | base64 -d)" >> $GITHUB_ENV
 
